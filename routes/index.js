@@ -12,10 +12,10 @@ router.get('/projects', indexController.projects);
 router.get('/About', indexController.about);
 
 /* GET services page. */
-router.get('/Services', indexController.about);
+router.get('/Services', indexController.service);
 
 /* GET Contact page. */
-router.get('/Contact', indexController.about);
+router.get('/Contact', indexController.contact);
 
 
 module.exports = router;
