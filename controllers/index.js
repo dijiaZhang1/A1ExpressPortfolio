@@ -3,17 +3,17 @@ exports.home = function(req, res, next) {
 }
 
 exports.projects = function(req, res, next) {
-    res.render('index', { title: 'Projects' });
+    res.render('projects', { title: 'Projects' });
 }
 
 exports.about = function(req, res, next) {
-    res.render('index', { title: 'About' });
+    res.render('about', { title: 'About' });
 }
 
-exports.service = function(req, res, next) {
-    res.render('index', { title: 'Services' });
+exports.services = function(req, res, next) {
+    res.render('services', { title: 'Services' });
 }
 
 exports.contact = function(req, res, next) {
-    res.render('index', { title: 'Contact' });
+    res.render('contact', { title: 'Contact' });
 }

@@ -12,7 +12,7 @@ router.get('/projects', indexController.projects);
 router.get('/About', indexController.about);
 
 /* GET services page. */
-router.get('/Services', indexController.service);
+router.get('/Services', indexController.services);
 
 /* GET Contact page. */
 router.get('/Contact', indexController.contact);
