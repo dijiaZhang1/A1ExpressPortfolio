@@ -14,6 +14,6 @@ exports.services = function(req, res, next) {
     res.render('services', { title: 'Services' });
 }
 
-exports.contact = function(req, res, next) {
-    res.render('contact', { title: 'Contact' });
+exports.contact_me = function(req, res, next) {
+    res.render('contact_me', { title: 'Contact_me' });
 }

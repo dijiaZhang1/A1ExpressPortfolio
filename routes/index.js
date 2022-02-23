@@ -15,7 +15,7 @@ router.get('/About', indexController.about);
 router.get('/Services', indexController.services);
 
 /* GET Contact page. */
-router.get('/Contact', indexController.contact);
+router.get('/Contact_me', indexController.contact_me);
 
 
 module.exports = router;
