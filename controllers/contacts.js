@@ -1,21 +1,22 @@
 let mongoose = require('mongoose');
 
 // Connect to our model
-let Inventory = require('../models/inventory');
+let Contacts = require('../models/contacts');
 
 exports.list = function(req, res, next) {
-    Inventory.find( (err, inventoryList) => {
+    Contacts.find( (err, contactsList) => {
 
         if(err){
             return console.error(err);
         }
         else{
-            // console.log(inventoryList);
+            // console.log(contactsList);
             res.render(
-                'inventory/list', 
+                'contacts/list', 
                 { 
-                    title: 'Inventory List',
-                    InventoryList: inventoryList
+                    title: 'Contacts List',
+                    ContactsList: contactsList,
+                    userName: req.user ? req.user.username : ''
                 }
             );
         }
@@ -25,13 +26,14 @@ exports.list = function(req, res, next) {
 
 module.exports.displayAddPage = (req, res, next) => {
     
-    let newItem = Inventory();
+    let newItem = Contacts();
 
     res.render(
-        'inventory/add_edit', 
+        'contacts/add_edit', 
         {
             title: 'Add a new Item',
-            item: newItem
+            item: newItem,
+            userName: req.user ? req.user.username : ''
         }
     )          
 }
@@ -39,20 +41,15 @@ module.exports.displayAddPage = (req, res, next) => {
 
 module.exports.processAddPage = (req, res, next) => {
     
-    let newItem = Inventory({
+    let newItem = Contacts({
         _id: req.body.id,
-        item: req.body.item,
-        qty: req.body.qty,
-        status: req.body.status,
-        size : {
-            h: req.body.size_h,
-            w: req.body.size_w,
-            uom: req.body.size_uom,
-        },
-        tags: req.body.tags.split(",").map(word => word.trim())
+        name: req.body.name,
+        number: req.body.number,
+        email: req.body.email,
+    
     });
 
-    Inventory.create(newItem, (err, item) =>{
+    Contacts.create(newItem, (err, item) =>{
         if(err)
         {
             console.log(err);
@@ -62,7 +59,7 @@ module.exports.processAddPage = (req, res, next) => {
         {
             // refresh the book list
             console.log(item);
-            res.redirect('/inventory/list');
+            res.redirect('/contacts/list');
         }
     });
 }
@@ -71,7 +68,7 @@ module.exports.processAddPage = (req, res, next) => {
 module.exports.displayEditPage = (req, res, next) => {
     let id = req.params.id;
 
-    Inventory.findById(id, (err, itemToEdit) => {
+    Contacts.findById(id, (err, itemToEdit) => {
         if(err)
         {
             console.log(err);
@@ -81,10 +78,11 @@ module.exports.displayEditPage = (req, res, next) => {
         {
             //show the edit view
             res.render(
-                'inventory/add_edit', 
+                'contacts/add_edit', 
                 {
                     title: 'Edit Item', 
-                    item: itemToEdit
+                    item: itemToEdit,
+                    userName: req.user ? req.user.username : ''
                 }
             )
         }
@@ -95,22 +93,16 @@ module.exports.displayEditPage = (req, res, next) => {
 module.exports.processEditPage = (req, res, next) => {
     let id = req.params.id
 
-    let updatedItem = Inventory({
+    let updatedItem = Contacts({
         _id: req.body.id,
-        item: req.body.item,
-        qty: req.body.qty,
-        status: req.body.status,
-        size : {
-            h: req.body.size_h,
-            w: req.body.size_w,
-            uom: req.body.size_uom,
-        },
-        tags: req.body.tags.split(",").map(word => word.trim())
+        name: req.body.name,
+        number: req.body.number,
+        email: req.body.email,
     });
 
     // console.log(updatedItem);
 
-    Inventory.updateOne({_id: id}, updatedItem, (err) => {
+    Contacts.updateOne({_id: id}, updatedItem, (err) => {
         if(err)
         {
             console.log(err);
@@ -118,9 +110,9 @@ module.exports.processEditPage = (req, res, next) => {
         }
         else
         {
-            // console.log(req.body);
+            
             // refresh the book list
-            res.redirect('/inventory/list');
+            res.redirect('/contacts/list');
         }
     });
 }
@@ -128,7 +120,7 @@ module.exports.processEditPage = (req, res, next) => {
 module.exports.performDelete = (req, res, next) => {
     let id = req.params.id;
 
-    Inventory.remove({_id: id}, (err) => {
+    Contacts.remove({_id: id}, (err) => {
         if(err)
         {
             console.log(err);
@@ -137,7 +129,7 @@ module.exports.performDelete = (req, res, next) => {
         else
         {
             // refresh the book list
-            res.redirect('/inventory/list');
+            res.redirect('/contacts/list');
         }
     });
 }
