@@ -8,13 +8,6 @@ exports.user = function(req, res, next) {
     });
 }
 
-exports.julio = function(req, res, next) {
-    res.render('user', { 
-        title: 'User',
-        name: 'Julio'
-    });
-}
-
 function getErrorMessage(err) {
     console.log("===> Erro: " + err);
     let message = '';
